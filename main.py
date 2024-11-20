@@ -445,7 +445,7 @@ while running:
                 bombs.remove(bomb)
 
         # Update and draw all components
-        test.update()
+        test.flow()
         test.draw(screen)
         treasure.draw(screen)
         player.draw(screen)
