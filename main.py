@@ -24,7 +24,7 @@ class Fluidlogic:
         self.size = size
         self.grid = grid
 
-    def update(self):
+    def flow(self):
         for pos in sorted(self.grid.keys(), key=lambda p: -p[1]):
             cell = self.grid[pos]
 
