@@ -8,7 +8,7 @@ water = 2
 lava = 3
 stone = 4
 GRAVITY = 0.5
-BOUNCE_STOP = 1
+
 pygame.init()
 screen = pygame.display.set_mode((750, 600))
 pygame.display.set_caption("Hustle Castle")
@@ -128,7 +128,7 @@ class Player:
         else:
             self.mode = "DIG MODE"
         if self.mode == "BOMB MODE" and not self.bomb_appear:
-            self.bomb_appear = Bomb(self.pos[0] * size + size * 0.5, self.pos[1] * size - size * 0.2, 5, 0, 0, 0.8, 0.05, bomb_img, explosion_effect_img)
+            self.bomb_appear = Bomb(self.pos[0] * size + size * 0.5, self.pos[1] * size - size * 0.2, 5, 0, 0, 0.8, bomb_img, explosion_effect_img)
         elif self.mode == "DIG MODE":
             self.bomb_appear = None
 
@@ -217,7 +217,6 @@ class Bomb(pygame.sprite.Sprite):
         self.retention = retention
         self.y_speed = y_sp
         self.x_speed = x_sp
-        self.friction = friction
         self.launched = False
         self.exploded = False
         self.time_left = 3.0
