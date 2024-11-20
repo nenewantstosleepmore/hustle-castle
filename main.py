@@ -25,7 +25,7 @@ class Fluidlogic:
         self.grid = grid
 
     def flow(self):
-        for pos in sorted(self.grid.keys(), key=lambda p: -p[1]):
+        for pos in sorted(self.grid.keys(), key=lambda p: -p[1]): #sort by the y-axis max to min
             cell = self.grid[pos]
 
             direction = {'under': (pos[0], pos[1] + 1),
@@ -62,34 +62,12 @@ class Fluidlogic:
                         self.turn_into_stone(pos)
                         cell.set_type(empty)
 
-    '''def turn_into_stone(self, start_pos):
-        lis = [start_pos] # position that will meet lava first
-        visited = set()
-        while lis:
-            pos = lis.pop()
 
-            if pos in visited:
-                continue
-            visited.add(pos)
-            cell = self.grid.get(pos)
-
-            if cell and cell.type in [water, lava]:
-                cell.set_type(stone)
-                under = (pos[0], pos[1] + 1)
-                left = (pos[0] - 1, pos[1])
-                right = (pos[0] + 1, pos[1])
-
-                for near in [under, left, right]:
-                    if near not in visited and near in self.grid:
-                        near_cell = self.grid[near]
-                        if near_cell.type in [water, lava]:
-                            lis.append(near)
-        self.remove_water()'''
     def turn_into_stone(self, start_pos):
-        lis = [start_pos]  # Stack to process positions
+        lis = [start_pos]  # first pos that lava meet water (deepest)
 
         while lis:
-            pos = lis.pop()  # Get the next position from the stack
+            pos = lis.pop()  # Get the next position from the stack(remove & return)
             cell = self.grid.get(pos)
 
             # Only process if the cell is water or lava
@@ -101,7 +79,7 @@ class Fluidlogic:
                 left = (pos[0] - 1, pos[1])
                 right = (pos[0] + 1, pos[1])
 
-                # Add neighbors to the stack
+                # check near pos & add in list to turn all under fluid to stone
                 for near in [under, left, right]:
                     if near in self.grid:  # Ensure the neighbor exists in the grid
                         near_cell = self.grid[near]
@@ -379,7 +357,7 @@ img = load_image(game_menu.stage)
 #init class
 setup = Stage(game_menu.stage, grid_w, grid_h, size)
 grid = setup.setup_tile()
-test = Fluidlogic(grid_w, grid_h, size, setup.grid)
+test = Fluidlogic(grid_w, grid_h, size, setup.grid) # use grid from setup
 treasure = Treasure(setup.get_treasure_pos(), closed_chest, opened_chest, min_d)
 player = Player(setup.get_player_pos(), player_img)
 player.update(test)
