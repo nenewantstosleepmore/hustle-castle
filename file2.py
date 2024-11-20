@@ -209,7 +209,7 @@ class Player:
 
 
 class Bomb(pygame.sprite.Sprite):
-    def __init__(self, x_pos, y_pos, r,y_sp, x_sp, retention, friction, bomb_img,explosion_effect_img):
+    def __init__(self, x_pos, y_pos, r,y_sp, x_sp, retention, bomb_img,explosion_effect_img):
         super().__init__()
         self.x_pos = x_pos
         self.y_pos = y_pos

@@ -62,8 +62,8 @@ class Fluidlogic:
                         self.turn_into_stone(pos)
                         cell.set_type(empty)
 
-    def turn_into_stone(self, start_pos):
-        lis = [start_pos]
+    '''def turn_into_stone(self, start_pos):
+        lis = [start_pos] # position that will meet lava first
         visited = set()
         while lis:
             pos = lis.pop()
@@ -84,7 +84,31 @@ class Fluidlogic:
                         near_cell = self.grid[near]
                         if near_cell.type in [water, lava]:
                             lis.append(near)
+        self.remove_water()'''
+    def turn_into_stone(self, start_pos):
+        lis = [start_pos]  # Stack to process positions
+
+        while lis:
+            pos = lis.pop()  # Get the next position from the stack
+            cell = self.grid.get(pos)
+
+            # Only process if the cell is water or lava
+            if cell and cell.type in [water, lava]:
+                cell.set_type(stone)  # Turn the current tile into stone
+
+                # Define neighboring positions
+                under = (pos[0], pos[1] + 1)
+                left = (pos[0] - 1, pos[1])
+                right = (pos[0] + 1, pos[1])
+
+                # Add neighbors to the stack
+                for near in [under, left, right]:
+                    if near in self.grid:  # Ensure the neighbor exists in the grid
+                        near_cell = self.grid[near]
+                        if near_cell.type in [water, lava]:  # Add if it's water or lava
+                            lis.append(near)
         self.remove_water()
+
 
     def remove_water(self):
         for pos, cell in self.grid.items():
