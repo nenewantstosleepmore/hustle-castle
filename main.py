@@ -40,7 +40,7 @@ class Fluidlogic:
                             n_cell.set_type(cell.type)
                             cell.set_type(empty)
                             continue
-        self.create_stone()
+        self.check_lavawater()
 
     def delete_dirt(self, mouseX, mouseY):
         pos_g = (mouseX // self.size, mouseY // self.size)
@@ -49,7 +49,7 @@ class Fluidlogic:
             if cell.type == dirt:
                 cell.set_type(empty)
 
-    def create_stone(self):
+    def check_lavawater(self):
         for pos, cell in self.grid.items():
             if cell.type == water:
                 direction = [(0, 1),  # above
